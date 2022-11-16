@@ -16,7 +16,7 @@ def user():
     user = get_user_model().objects.create_user(
         email="test@example.com",
         password="Test-pass321",
-        name='Test Name',
+        name="Test Name",
     )
     return user
 
@@ -37,8 +37,8 @@ def test_users_listed(client, admin_user, user):
     url = reverse("admin:core_user_changelist")
     response = client.get(url)
 
-    assert user.name in response.content.decode('utf-8')
-    assert user.email in response.content.decode('utf-8')
+    assert user.name in response.content.decode("utf-8")
+    assert user.email in response.content.decode("utf-8")
 
 
 @pytest.mark.django_db
