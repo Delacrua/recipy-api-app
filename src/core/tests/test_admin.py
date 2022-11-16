@@ -42,10 +42,20 @@ def test_users_listed(client, admin_user, user):
 
 
 @pytest.mark.django_db
-def test_users_change_page(client, admin_user, user):
-    """test that the user edit page works"""
+def test_edit_user_page(client, admin_user, user):
+    """test that the edit user page works"""
     client.force_login(admin_user)
     url = reverse("admin:core_user_change", args=[user.id])
+    response = client.get(url)
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_create_user_page(client, admin_user, user):
+    """test that the create user page works"""
+    client.force_login(admin_user)
+    url = reverse("admin:core_user_add")
     response = client.get(url)
 
     assert response.status_code == 200
