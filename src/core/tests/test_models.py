@@ -25,3 +25,14 @@ def test_new_user_email_normalized():
         password="Test-pass123"
     )
     assert user.email == email.lower()
+
+
+@pytest.mark.django_db
+def test_new_user_invalid_email():
+    """Test creating user with no email raises error"""
+    email = None
+    with pytest.raises(ValueError):
+        get_user_model().objects.create_user(
+            email=email,
+            password="Test-pass123"
+        )
