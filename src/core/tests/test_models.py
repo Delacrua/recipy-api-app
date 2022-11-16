@@ -10,7 +10,7 @@ def test_create_user_with_email_successful():
     password = "Test-pass123"
     user = get_user_model().objects.create_user(
         email=email,
-        password=password
+        password=password,
     )
     assert user.email == email
     assert user.check_password(password)
@@ -22,7 +22,7 @@ def test_new_user_email_normalized():
     email = 'test@TEST.COM'
     user = get_user_model().objects.create_user(
         email=email,
-        password="Test-pass123"
+        password="Test-pass123",
     )
     assert user.email == email.lower()
 
@@ -34,5 +34,16 @@ def test_new_user_invalid_email():
     with pytest.raises(ValueError):
         get_user_model().objects.create_user(
             email=email,
-            password="Test-pass123"
+            password="Test-pass123",
         )
+
+
+@pytest.mark.django_db
+def test_create_new_superuser():
+    """Test creating a new superuser"""
+    user = get_user_model().objects.create_superuser(
+        email="test@example.com",
+        password="Test-pass123",
+    )
+    assert user.is_superuser
+    assert user.is_staff
