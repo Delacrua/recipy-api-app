@@ -40,3 +40,12 @@ def test_users_listed(client, admin_user, user):
     assert user.name in response.content.decode('utf-8')
     assert user.email in response.content.decode('utf-8')
 
+
+@pytest.mark.django_db
+def test_users_change_page(client, admin_user, user):
+    """test that the user edit page works"""
+    client.force_login(admin_user)
+    url = reverse("admin:core_user_change", args=[user.id])
+    response = client.get(url)
+
+    assert response.status_code == 200
